@@ -7,12 +7,15 @@ import './Resources/fonts/walsheim/GTWalsheimPro-Regular.ttf';
 import './Resources/fonts/walsheim/GTWalsheimPro-Light.ttf';
 import './Resources/fonts/walsheim/GTWalsheimPro-Bold.ttf';
 import { BrowserRouter } from 'react-router-dom';
+import {AuthContextProvider} from "./context/authContext";
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <React.StrictMode>
     <BrowserRouter>
-        <App />
+        <AuthContextProvider>
+            <App />
+        </AuthContextProvider>
     </BrowserRouter>
   </React.StrictMode>
 );

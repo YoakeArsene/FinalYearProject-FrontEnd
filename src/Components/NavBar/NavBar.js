@@ -4,7 +4,6 @@ import { ReactComponent as Logo } from "../../Resources/image/logo.svg";
 import { ReactComponent as Browse } from "../../Resources/image/browse.svg";
 import { ReactComponent as Cart } from "../../Resources/image/cart.svg";
 import { ReactComponent as Book } from "../../Resources/image/book.svg";
-import { ReactComponent as GitHub } from "../../Resources/image/github.svg";
 import { ReactComponent as Search } from "../../Resources/image/search.svg";
 import { motion } from "framer-motion";
 import { useLocation, useNavigate } from 'react-router-dom';

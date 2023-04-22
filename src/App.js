@@ -1,5 +1,3 @@
-import logo from './logo.svg';
-import styles from './App.module.css';
 import { BrowserRouter, Routes, Route, useNavigate, useLocation } from "react-router-dom";
 import React, { useEffect, useState } from 'react';
 import Browse from './Containers/Browse/Browse';
