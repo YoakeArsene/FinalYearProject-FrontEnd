@@ -1,10 +1,10 @@
-import styles from './Login.module.css';
+import styles from './Register.module.css';
 import NavBar from "../../Components/NavBar/NavBar";
 import {motion} from "framer-motion";
-import React, {useContext, useState} from "react";
-import {Link, Navigate, useNavigate} from "react-router-dom";
-import { AuthContext } from "../../context/authContext";
-const Login = props => {
+import React, {useState} from "react";
+import {useNavigate} from "react-router-dom";
+import axios from "axios";
+const Register = props => {
     const {
         hoverState,
         handleHome,
@@ -20,53 +20,55 @@ const Login = props => {
     const navigate = useNavigate();
 
     const [inputs, setInputs] = useState({
+        username: "",
         email: "",
         password: "",
+        role_ticker: "USR",
     });
-
     const [err, setErr] = useState(null);
 
     const handleChange = (e) => {
         setInputs((prev) => ({ ...prev, [e.target.name]: e.target.value }));
     };
 
-    const { currentUser, login } = useContext(AuthContext);
-
-    const handleLogin = async (e) => {
+    const handleRegister = async (e) => {
         e.preventDefault();
-        setErr(null);
+
         try {
-            await login(inputs);
-            navigate("/");
+            await axios.post("http://localhost:1313/user/add", inputs);
+            navigate("/login");
         } catch (err) {
             setErr(err.response.data);
         }
     };
 
-    if (currentUser) {
-        handleHome();
-    }
-
     return (
-        <div className={styles.login}>
+        <div className={styles.register}>
             <NavBar
                 handleHover={handleHover}
                 hoverState={hoverState}
                 handleHome={handleHome}
             />
 
-            <motion.div className={styles.loginContainer} variants={animations} initial="initial" animate="animate" exit="exit">
-                <div className={styles.loginContent}>
-                    <div className={styles.loginText}>
-                        <h1>Login</h1>
+            <motion.div className={styles.registerContainer} variants={animations} initial="initial" animate="animate" exit="exit">
+                <div className={styles.registerContent}>
+                    <div className={styles.registerText}>
+                        <h1>Register</h1>
                     </div>
                 </div>
                 <motion.div
                     animate="visible"
                     transition={{ opacity: { type: "spring" }, duration: 0.01, delay: 0.25 }}
-                    className={styles.loginForm}
+                    className={styles.registerForm}
                 >
-                    <form onSubmit={handleLogin}>
+                    <form onSubmit={handleRegister}>
+                        <input
+                            type="text"
+                            placeholder="Username"
+                            name="username"
+                            onChange={handleChange}
+                        >
+                        </input>
                         <input
                             type="text"
                             placeholder="Email"
@@ -81,15 +83,9 @@ const Login = props => {
                             onChange={handleChange}
                         >
                         </input>
-                        {err && <div>{err.message}</div>}
                         <button type="submit" className={`${styles.cta}`}>
-                            Login
+                            Register
                         </button>
-                        <Link to="/register">
-                            <button className={`${styles.cta}`}>
-                                Register
-                            </button>
-                        </Link>
                     </form>
                 </motion.div>
             </motion.div>
@@ -97,4 +93,4 @@ const Login = props => {
     );
 }
 
-export default Login;
+export default Register;
