@@ -1,5 +1,5 @@
 import { BrowserRouter, Routes, Route, useNavigate, useLocation } from "react-router-dom";
-import React, { useEffect, useState } from 'react';
+import React, {useContext, useEffect, useState} from 'react';
 import Browse from './Containers/Browse/Browse';
 import GamePage from './Containers/GamePage/GamePage';
 import NotFound from './Containers/NotFound/NotFound';
@@ -9,11 +9,12 @@ import Register from './Containers/Register/Register';
 import Profile from './Containers/Profile/Profile';
 import { AnimatePresence } from "framer-motion";
 import filterNames from './utils/filterNames';
-import games from './utils/games';
 import templateGame from './utils/templateGame';
+import {GameContext} from "./context/gameContext";
 
 function App() {
   const [currentFilter, setCurrentFilter] = useState("none");
+  const { games } = useContext(GameContext);
   const [allGames, setAllGames] = useState(games);
   const [cart, setCart] = useState([]);
   const [cartAmount, setCartAmount] = useState(0);
@@ -135,7 +136,6 @@ const location = useLocation();
 
 if (location.pathname !== "/store/" && location.pathname !== "/store/browse" && selectedGame === false) {
   let surname = location.pathname.substring(29);
-  console.log("test");
   let currentGame = games.find(game => game.surname === surname);
   if (currentGame !== undefined) {
     setSelectedGame(currentGame);
@@ -308,6 +308,10 @@ const handleRemoveFromCart = (e) => {
   setCartAmount(cartAmount - 1)
   setHoverState([...hoverState, hoverState[21].hovered = false]);
 }
+
+  useEffect(() => {
+    setAllGames(games);
+  }, [games]);
 
 useEffect(() => {
   setOverlap(false);

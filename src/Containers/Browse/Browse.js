@@ -62,6 +62,7 @@ const Browse = props => {
     useEffect(() => {
       if (currentFilter == "none") {
         setShownGames(allGames);
+        console.log(shownGames);
 
       } else if (currentFilter != "Ratings" && currentFilter != "Reviews" && currentFilter != "Wishlist") {
           let filteredShownGames = allGames.filter(game => game.genre === currentFilter);
