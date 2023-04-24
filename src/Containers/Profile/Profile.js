@@ -70,39 +70,20 @@ const Register = props => {
 
             <motion.div className={styles.profileContainer} variants={animations} initial="initial" animate="animate" exit="exit">
                 <div className={styles.profileContent}>
-                    <div className={styles.profileText}>
-                        <h1>Register</h1>
-                    </div>
+                    <img
+                        className={styles.avatar}
+                        src={currentUser.data?.user?.avatar}
+                        alt="My Avatar"
+                    />
+                    <h1 className={styles.name}>{currentUser.data?.user?.username}</h1>
+                    <hr />
+                    <ul>
+                        <li className={styles.email}>
+                            <strong>Email</strong>: {currentUser.data?.user?.email}
+                        </li>
+                    </ul>
                 </div>
-                <motion.div
-                    animate="visible"
-                    transition={{ opacity: { type: "spring" }, duration: 0.01, delay: 0.25 }}
-                    className={styles.profileForm}
-                >
-                    <form>
-                        <input
-                            type="text"
-                            placeholder="Username"
-                            name="username"
-                        >
-                        </input>
-                        <input
-                            type="text"
-                            placeholder="Email"
-                            name="email"
-                        >
-                        </input>
-                        <input
-                            type="password"
-                            placeholder="Password"
-                            name="password"
-                        >
-                        </input>
-                        <button type="submit" className={`${styles.cta}`}>
-                            Register
-                        </button>
-                    </form>
-                </motion.div>
+
             </motion.div>
         </div>
     );

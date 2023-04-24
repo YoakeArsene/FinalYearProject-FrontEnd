@@ -51,7 +51,6 @@ const NavBar = props => {
 
         try {
             await logout();
-            navigate("/login");
         } catch (err) {
             console.log("Logout failed with error:" + err);
         }

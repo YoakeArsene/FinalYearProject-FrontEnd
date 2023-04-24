@@ -22,7 +22,7 @@
 }
 
 .profileContent {
-    display: flex;
+    display: inline-block;
     justify-content: center;
     align-items: center;
     gap: 50px;
@@ -116,6 +116,28 @@
 
 .cta span {
     padding-top: 1px;
+}
+
+.avatar {
+    width: 200px;
+    height: 200px;
+    border-radius: 50%;
+    object-fit: cover;
+    margin-top: 20px;
+}
+
+.name {
+    font-size: 36px;
+    margin-top: 20px;
+    font-family: "GT Bold";
+    color: white;
+}
+
+.email {
+    font-size: 27px;
+    margin-top: 10px;
+    font-family: "GT Bold";
+    color: white;
 }
 
 
