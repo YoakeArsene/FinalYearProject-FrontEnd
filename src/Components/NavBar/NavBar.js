@@ -46,6 +46,10 @@ const NavBar = props => {
         navigate("/login");
     }
 
+    function handleManage() {
+        navigate("/manage");
+    }
+
     const handleLogout = async (e) => {
         e.preventDefault();
 
@@ -134,12 +138,19 @@ const NavBar = props => {
                 </>
             ) : (
                 <>
-                    <div className={styles.logodiv}>
-                        <Book
-                            className={styles.svg}
-                        />
-                        <h3 onClick={handleBrowse}>Your Library</h3>
-                    </div>
+                    {currentUser.data.user.role_ticker === "SAD" ? (
+                        <>
+                        </>
+                    ) : (
+                        <>
+                            <div className={styles.logodiv}>
+                                <Book
+                                    className={styles.svg}
+                                />
+                                <h3 onClick={handleBrowse}>Your Library</h3>
+                            </div>
+                        </>
+                    )}
                 </>
             )}
         </div>
@@ -175,41 +186,66 @@ const NavBar = props => {
                 </>
             ) : (
                 <>
-                    <Link to="/profile">
-                    <div
-                        className={styles.githubdiv}
-                        id="2"
-                        onMouseEnter={handleHover}
-                        onMouseLeave={handleHover}
-                    >
-                        <h3>Profile</h3>
-                    </div>
-                    </Link>
+                    {currentUser.data.user.role_ticker === "SAD" ? (
+                        <>
+                            <div
+                                className={styles.githubdiv}
+                                id="2"
+                                onMouseEnter={handleHover}
+                                onMouseLeave={handleHover}
+                                onClick={handleManage}
+                            >
+                                <h3>Manage</h3>
+                            </div>
+                            <div
+                                className={styles.githubdiv}
+                                id="2"
+                                onMouseEnter={handleHover}
+                                onMouseLeave={handleHover}
+                                onClick={handleLogout}
+                            >
+                                <h3>Log Out</h3>
+                            </div>
+                        </>
+                    ):(
+                        <>
+                            <Link to="/profile">
+                                <div
+                                    className={styles.githubdiv}
+                                    id="2"
+                                    onMouseEnter={handleHover}
+                                    onMouseLeave={handleHover}
+                                >
+                                    <h3>Profile</h3>
+                                </div>
+                            </Link>
 
-                    <div
-                        className={styles.cartdiv}
-                        id="3"
-                        onMouseEnter={handleHover}
-                        onMouseLeave={handleHover}
-                        onClick={handleOpenCart}
-                    >
-                        <Cart
-                            onClick={handleOpenCart}
-                            className={styles.svg2}
-                            style={{ fill: cartAmount ? "#90ee90" : "transparent", stroke: cartAmount ? "" : "#fff", strokeWidth: "34px" }}
-                        />
-                        <h3 onClick={handleOpenCart}>Cart: {cartAmount}</h3>
-                    </div>
+                            <div
+                                className={styles.cartdiv}
+                                id="3"
+                                onMouseEnter={handleHover}
+                                onMouseLeave={handleHover}
+                                onClick={handleOpenCart}
+                            >
+                                <Cart
+                                    onClick={handleOpenCart}
+                                    className={styles.svg2}
+                                    style={{ fill: cartAmount ? "#90ee90" : "transparent", stroke: cartAmount ? "" : "#fff", strokeWidth: "34px" }}
+                                />
+                                <h3 onClick={handleOpenCart}>Cart: {cartAmount}</h3>
+                            </div>
 
-                    <div
-                        className={styles.githubdiv}
-                        id="2"
-                        onMouseEnter={handleHover}
-                        onMouseLeave={handleHover}
-                        onClick={handleLogout}
-                    >
-                        <h3>Log Out</h3>
-                    </div>
+                            <div
+                                className={styles.githubdiv}
+                                id="2"
+                                onMouseEnter={handleHover}
+                                onMouseLeave={handleHover}
+                                onClick={handleLogout}
+                            >
+                                <h3>Log Out</h3>
+                            </div>
+                        </>
+                    )}
                 </>
             )}
         </div>

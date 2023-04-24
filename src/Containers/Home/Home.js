@@ -134,19 +134,33 @@ const Home = props => {
                               </button>
                               {!currentUser ? (
                                   <>
+                                      <button className={styles.cta} onClick={handlePlayDice} aria-label="Open random game page">
+                                          <Dice className={styles.ctaSVG} />
+                                          Play Dice
+                                      </button>
                                   </>
                               ) : (
                                   <>
-                                      <button className={styles.cta} aria-label="Open user library">
-                                          <Book className={styles.ctaSVG} />
-                                          Library
-                                      </button>
+                                      {currentUser.data.user.role_ticker === "SAD" ? (
+                                          <>
+                                              <button className={styles.cta}>
+                                                  You are currently logged in as Admin
+                                              </button>
+                                          </>
+                                      ) : (
+                                          <>
+                                              <button className={styles.cta} aria-label="Open user library">
+                                                  <Book className={styles.ctaSVG} />
+                                                  Library
+                                              </button>
+                                              <button className={styles.cta} onClick={handlePlayDice} aria-label="Open random game page">
+                                                  <Dice className={styles.ctaSVG} />
+                                                  Play Dice
+                                              </button>
+                                          </>
+                                      )}
                                   </>
                               )}
-                              <button className={styles.cta} onClick={handlePlayDice} aria-label="Open random game page">
-                                <Dice className={styles.ctaSVG} />
-                                Play Dice
-                              </button>
                         </div>
                     </div>
                 </div>
