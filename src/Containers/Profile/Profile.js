@@ -1,11 +1,12 @@
-import styles from './Login.module.css';
+import styles from './Profile.module.css';
 import NavBar from "../../Components/NavBar/NavBar";
 import {motion} from "framer-motion";
 import React, {useContext, useState} from "react";
-import {Link, Navigate, useNavigate} from "react-router-dom";
-import { AuthContext } from "../../context/authContext";
+import {useNavigate} from "react-router-dom";
+import axios from "axios";
+import {AuthContext} from "../../context/authContext";
 import Cart from "../../Components/Cart/Cart";
-const Login = props => {
+const Register = props => {
     const {
         cartDisplayed,
         handleCloseCart,
@@ -35,36 +36,10 @@ const Login = props => {
 
     const navigate = useNavigate();
 
-    const [inputs, setInputs] = useState({
-        email: "",
-        password: "",
-    });
-
-    const [err, setErr] = useState(null);
-
-    const handleChange = (e) => {
-        setInputs((prev) => ({ ...prev, [e.target.name]: e.target.value }));
-    };
-
-    const { currentUser, login } = useContext(AuthContext);
-
-    const handleLogin = async (e) => {
-        e.preventDefault();
-        setErr(null);
-        try {
-            await login(inputs);
-            navigate("/");
-        } catch (err) {
-            setErr(err.response.data);
-        }
-    };
-
-    if (currentUser) {
-        handleHome();
-    }
+    const { currentUser } = useContext(AuthContext);
 
     return (
-        <div className={styles.login}>
+        <div className={styles.profile}>
             {cartDisplayed ? <Cart
                 cartDisplayed={cartDisplayed}
                 handleOpenCart={handleOpenCart}
@@ -93,41 +68,39 @@ const Login = props => {
                 handleCloseCart={handleCloseCart}
             />
 
-            <motion.div className={styles.loginContainer} variants={animations} initial="initial" animate="animate" exit="exit">
-                <div className={styles.loginContent}>
-                    <div className={styles.loginText}>
-                        <h1>Login</h1>
+            <motion.div className={styles.profileContainer} variants={animations} initial="initial" animate="animate" exit="exit">
+                <div className={styles.profileContent}>
+                    <div className={styles.profileText}>
+                        <h1>Register</h1>
                     </div>
                 </div>
                 <motion.div
                     animate="visible"
                     transition={{ opacity: { type: "spring" }, duration: 0.01, delay: 0.25 }}
-                    className={styles.loginForm}
+                    className={styles.profileForm}
                 >
-                    <form onSubmit={handleLogin}>
+                    <form>
+                        <input
+                            type="text"
+                            placeholder="Username"
+                            name="username"
+                        >
+                        </input>
                         <input
                             type="text"
                             placeholder="Email"
                             name="email"
-                            onChange={handleChange}
                         >
                         </input>
                         <input
                             type="password"
                             placeholder="Password"
                             name="password"
-                            onChange={handleChange}
                         >
                         </input>
-                        {err && <div>{err.message}</div>}
                         <button type="submit" className={`${styles.cta}`}>
-                            Login
+                            Register
                         </button>
-                        <Link to="/register">
-                            <button className={`${styles.cta}`}>
-                                Register
-                            </button>
-                        </Link>
                     </form>
                 </motion.div>
             </motion.div>
@@ -135,4 +108,4 @@ const Login = props => {
     );
 }
 
-export default Login;
+export default Register;

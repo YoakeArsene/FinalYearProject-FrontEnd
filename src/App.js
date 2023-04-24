@@ -6,6 +6,7 @@ import NotFound from './Containers/NotFound/NotFound';
 import Home from './Containers/Home/Home';
 import Login from './Containers/Login/Login';
 import Register from './Containers/Register/Register';
+import Profile from './Containers/Profile/Profile';
 import { AnimatePresence } from "framer-motion";
 import filterNames from './utils/filterNames';
 import games from './utils/games';
@@ -156,7 +157,7 @@ const handleHome = () => {
   setTextExtended(false);
   setCartDisplayed(false);
   setHoverState([...hoverState, hoverState[21].hovered = false]);
-  navigate('/store/');
+  navigate('/store');
 }
 
 const handleSearch = (e) => {
@@ -311,7 +312,8 @@ const handleRemoveFromCart = (e) => {
 useEffect(() => {
   setOverlap(false);
 
-  if (location.pathname === "/store/") {
+  if (location.pathname === "/store" || location.pathname === "/profile"
+      || location.pathname === "/login" || location.pathname === "/register") {
     setBrowsing(false);
   } else {
     setBrowsing(true);
@@ -451,14 +453,61 @@ useEffect(() => {
                             openGamePage={openGamePage}
           />} />
             <Route path="/login" element={<Login
-                                                 hoverState={hoverState}
-                                                 handleHome={handleHome}
-                                                 handleHover={handleHover}
+                                                cartDisplayed={cartDisplayed}
+                                                handleCloseCart={handleCloseCart}
+                                                handleOpenCart={handleOpenCart}
+                                                cartAmount={cartAmount}
+                                                clearCart={clearCart}
+                                                hoverState={hoverState}
+                                                handleHome={handleHome}
+                                                handleHover={handleHover}
+                                                cart={cart}
+                                                browsing={browsing}
+                                                search={search}
+                                                searching={searching}
+                                                handleSearch={handleSearch}
+                                                handleSearchSubmit={handleSearchSubmit}
+                                                handleBrowse={handleBrowse}
+                                                handleRemoveFromCart={handleRemoveFromCart}
+                                                openGamePage={openGamePage}
             />} />
             <Route path="/register" element={<Register
-                                                 hoverState={hoverState}
-                                                 handleHome={handleHome}
-                                                 handleHover={handleHover}
+                                                cartDisplayed={cartDisplayed}
+                                                handleCloseCart={handleCloseCart}
+                                                handleOpenCart={handleOpenCart}
+                                                cartAmount={cartAmount}
+                                                clearCart={clearCart}
+                                                hoverState={hoverState}
+                                                handleHome={handleHome}
+                                                handleHover={handleHover}
+                                                cart={cart}
+                                                browsing={browsing}
+                                                search={search}
+                                                searching={searching}
+                                                handleSearch={handleSearch}
+                                                handleSearchSubmit={handleSearchSubmit}
+                                                handleBrowse={handleBrowse}
+                                                handleRemoveFromCart={handleRemoveFromCart}
+                                                openGamePage={openGamePage}
+            />} />
+            <Route path="/profile" element={<Profile
+                                                cartDisplayed={cartDisplayed}
+                                                handleCloseCart={handleCloseCart}
+                                                handleOpenCart={handleOpenCart}
+                                                cartAmount={cartAmount}
+                                                clearCart={clearCart}
+                                                hoverState={hoverState}
+                                                handleHome={handleHome}
+                                                handleHover={handleHover}
+                                                cart={cart}
+                                                browsing={browsing}
+                                                search={search}
+                                                searching={searching}
+                                                handleSearch={handleSearch}
+                                                handleSearchSubmit={handleSearchSubmit}
+                                                handleBrowse={handleBrowse}
+                                                handleRemoveFromCart={handleRemoveFromCart}
+                                                openGamePage={openGamePage}
             />} />
           </Routes>
       </AnimatePresence>

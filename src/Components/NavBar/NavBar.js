@@ -7,7 +7,7 @@ import { ReactComponent as Book } from "../../Resources/image/book.svg";
 import { ReactComponent as Search } from "../../Resources/image/search.svg";
 import {AuthContext} from "../../context/authContext";
 import { motion } from "framer-motion";
-import { useLocation, useNavigate } from 'react-router-dom';
+import {Link, useLocation, useNavigate} from 'react-router-dom';
 const NavBar = props => { 
     const {
         handleHover,
@@ -176,6 +176,7 @@ const NavBar = props => {
                 </>
             ) : (
                 <>
+                    <Link to="/profile">
                     <div
                         className={styles.githubdiv}
                         id="2"
@@ -184,6 +185,7 @@ const NavBar = props => {
                     >
                         <h3>Profile</h3>
                     </div>
+                    </Link>
 
                     <div
                         className={styles.cartdiv}

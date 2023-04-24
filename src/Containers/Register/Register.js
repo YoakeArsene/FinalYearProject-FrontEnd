@@ -4,11 +4,27 @@ import {motion} from "framer-motion";
 import React, {useState} from "react";
 import {useNavigate} from "react-router-dom";
 import axios from "axios";
+import Cart from "../../Components/Cart/Cart";
 const Register = props => {
     const {
+        cartDisplayed,
+        handleCloseCart,
+        handleOpenCart,
+        cartAmount,
+        clearCart,
         hoverState,
         handleHome,
         handleHover,
+        handleBrowse,
+        cart,
+        browsing,
+        landingPage,
+        search,
+        searching,
+        handleSearch,
+        handleSearchSubmit,
+        handleRemoveFromCart,
+        openGamePage
     } = props;
 
     const animations = {
@@ -44,10 +60,32 @@ const Register = props => {
 
     return (
         <div className={styles.register}>
+            {cartDisplayed ? <Cart
+                cartDisplayed={cartDisplayed}
+                handleOpenCart={handleOpenCart}
+                handleCloseCart={handleCloseCart}
+                cart={cart}
+                cartAmount={cartAmount}
+                handleHover={handleHover}
+                hoverState={hoverState}
+                clearCart={clearCart}
+                handleRemoveFromCart={handleRemoveFromCart}
+                openGamePage={openGamePage}
+            /> : null}
             <NavBar
                 handleHover={handleHover}
                 hoverState={hoverState}
                 handleHome={handleHome}
+                browsing={browsing}
+                handleBrowse={handleBrowse}
+                landingPage={landingPage}
+                cartAmount={cartAmount}
+                search={search}
+                searching={searching}
+                handleSearch={handleSearch}
+                handleSearchSubmit={handleSearchSubmit}
+                handleOpenCart={handleOpenCart}
+                handleCloseCart={handleCloseCart}
             />
 
             <motion.div className={styles.registerContainer} variants={animations} initial="initial" animate="animate" exit="exit">
