@@ -1,10 +1,12 @@
 import styles from './Cart.module.css';
-import React, { useState } from 'react';
+import React, {useContext, useState} from 'react';
 import { ReactComponent as Right } from "../../Resources/image/arrowRight.svg";
 import { ReactComponent as Cross } from "../../Resources/image/cross.svg";
 import { motion, AnimatePresence } from "framer-motion";
 import AnimatedCart from '../../Containers/AnimatedPage/AnimatedCart';
 import AnimatedCard from '../../Containers/AnimatedPage/AnimatedCard';
+import {AuthContext} from "../../context/authContext";
+import {useNavigate} from "react-router-dom";
 
 const Cart = props => {
     const {
@@ -19,6 +21,10 @@ const Cart = props => {
         handleRemoveFromCart,
         openGamePage
     } = props;
+
+    const navigate = useNavigate();
+
+    const { currentUser } = useContext(AuthContext);
 
     const [total, setTotal] = useState(0);
     let newTotal = 0;
@@ -81,19 +87,35 @@ const Cart = props => {
                           style={{ width: "87.5%" , display: "flex", justifyContent: "space-between", alignItems: "center" }}
                         >
                                 <h3>Total: ${newTotal}</h3>
-                                <button 
-                                  id="24" 
-                                  onMouseEnter={handleHover} 
-                                  onMouseLeave={handleHover} 
-                                  style={{ color: hoverState[24].hovered ? "#92f" : "#fff" }} 
-                                  aria-label="Checkout"
-                                >
-                                    Checkout
-                                    <Right 
-                                      className={styles.right}
-                                      style={{ fill: hoverState[24].hovered ? "#92f" : "#fff" }}
-                                    />
-                                </button>
+                            {!currentUser ? (
+                                <>
+                                    <button
+                                        id="24"
+                                        onMouseEnter={handleHover}
+                                        onMouseLeave={handleHover}
+                                        style={{ color: hoverState[24].hovered ? "#92f" : "#fff" }}
+                                        aria-label="Login"
+                                    >
+                                        Login to Proceed
+                                    </button>
+                                </>
+                            ) : (
+                                <>
+                                    <button
+                                        id="24"
+                                        onMouseEnter={handleHover}
+                                        onMouseLeave={handleHover}
+                                        style={{ color: hoverState[24].hovered ? "#92f" : "#fff" }}
+                                        aria-label="Checkout"
+                                    >
+                                        Checkout
+                                        <Right
+                                            className={styles.right}
+                                            style={{ fill: hoverState[24].hovered ? "#92f" : "#fff" }}
+                                        />
+                                    </button>
+                                </>
+                            )}
                         </div>
                     </div>
                     </AnimatedCart>

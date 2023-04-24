@@ -1,5 +1,5 @@
 import styles from './Card.module.css';
-import React from 'react';
+import React, {useContext} from 'react';
 import { ReactComponent as Like } from "../../Resources/image/like.svg";
 import { ReactComponent as Add } from "../../Resources/image/add.svg";
 import { motion } from "framer-motion";
@@ -7,6 +7,7 @@ import AddToCart from '../AddToCart/AddToCart';
 import AddedToCart from '../AddedToCart/AddedToCart';
 import AnimatedCard from '../../Containers/AnimatedPage/AnimatedCard';
 import { useLocation } from 'react-router-dom';
+import {AuthContext} from "../../context/authContext";
 
 const Card = props => {
     const { 
@@ -27,6 +28,8 @@ const Card = props => {
 
     const location = useLocation();
 
+    const { currentUser } = useContext(AuthContext);
+
     return (
           <motion.div 
             className={hoverState[1].selected === false ? styles.card : game.id === 26 ? styles.fifa : game.id === 12 ? styles.tombraider : game.id === 3 ? styles.mariokart : game.id === 11 ? styles.minecraft : styles.cardHome}
@@ -41,26 +44,34 @@ const Card = props => {
             <img src={game.cover} className={styles.img} alt="Game Cover Image" />
     
             <div className={styles.price}>
-                    {game.inCart ? <AddedToCart /> : <AddToCart 
-                                          game={game} 
-                                          handleHoverGame={handleHoverGame} 
-                                          handleAddToCart={handleAddToCart} 
+                    {game.inCart ? <AddedToCart /> : <AddToCart
+                                          game={game}
+                                          handleHoverGame={handleHoverGame}
+                                          handleAddToCart={handleAddToCart}
                                         />
                     }
                 ${game.price}
             </div>
             <h2 className={styles.name}>{game.name}</h2>
-            <button 
-              className={styles.like} 
-              id={game.id} 
-              onClick={handleLike} 
-              aria-label="Like"
-            >
-                <Like 
-                  style={{ fill: game.isLiked ? "#F53333" : "#cccccc" }} 
-                  className={styles.likeSVG}
-                />
-            </button>
+            {!currentUser ? (
+                <>
+                </>
+            ) : (
+                <>
+                    <button
+                        className={styles.like}
+                        id={game.id}
+                        onClick={handleLike}
+                        aria-label="Like"
+                    >
+                        <Like
+                            style={{ fill: game.isLiked ? "#F53333" : "#cccccc" }}
+                            className={styles.likeSVG}
+                        />
+                    </button>
+                </>
+            )}
+
           </motion.div>
     );
   }

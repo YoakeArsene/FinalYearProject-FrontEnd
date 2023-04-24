@@ -1,4 +1,4 @@
-import React from "react";
+import React, {useContext} from "react";
 import styles from "./Filters.module.css";
 import { ReactComponent as Wishlist } from "../../Resources/image/wishlist.svg";
 import { ReactComponent as Ratings } from "../../Resources/image/ratings.svg";
@@ -11,6 +11,7 @@ import { ReactComponent as Adventure } from "../../Resources/image/adventure.svg
 import { ReactComponent as Puzzle } from "../../Resources/image/puzzle.svg";
 import { ReactComponent as Racing } from "../../Resources/image/racing.svg";
 import { ReactComponent as Sports } from "../../Resources/image/sports.svg";
+import {AuthContext} from "../../context/authContext";
 
 const Filters = props => {
     const {
@@ -20,31 +21,40 @@ const Filters = props => {
         currentFilter
     } = props;
 
+    const { currentUser } = useContext(AuthContext);
+
     return (
         <div className={styles.filters}>
           <h2>Filters</h2>
 
           <div className={styles.globalFilters}>
-               <div 
-                 className={styles.filterDiv} 
-                 id="8" 
-                 onMouseEnter={handleHover} 
-                 onMouseLeave={handleHover} 
-                 onClick={handleSelect}
-               >
-                 <button 
-                   className={styles.filterBtn} 
-                   style={{ backgroundColor: (hoverState[8].hovered || currentFilter == "Wishlist") ? "#fff" : "#2d2d2d" }}
-                   aria-label="Open wishlist"
-                 >
-                     <Wishlist 
-                        style={{ fill: (hoverState[8].hovered || currentFilter == "Wishlist") ? "#000000" : "#fff" }} 
-                        className={styles.Wishlist}
-                     />
-                 </button>
-                 Wishlist
-               </div>
-     
+              {!currentUser ? (
+                  <>
+                  </>
+              ) : (
+                  <>
+                      <div
+                          className={styles.filterDiv}
+                          id="8"
+                          onMouseEnter={handleHover}
+                          onMouseLeave={handleHover}
+                          onClick={handleSelect}
+                      >
+                          <button
+                              className={styles.filterBtn}
+                              style={{ backgroundColor: (hoverState[8].hovered || currentFilter == "Wishlist") ? "#fff" : "#2d2d2d" }}
+                              aria-label="Open wishlist"
+                          >
+                              <Wishlist
+                                  style={{ fill: (hoverState[8].hovered || currentFilter == "Wishlist") ? "#000000" : "#fff" }}
+                                  className={styles.Wishlist}
+                              />
+                          </button>
+                          Wishlist
+                      </div>
+                  </>
+              )}
+
                <div 
                  className={styles.filterDiv} 
                  id="9" 

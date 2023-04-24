@@ -1,5 +1,5 @@
 import styles from './GamePage.module.css';
-import React, { useEffect, useState } from 'react';
+import React, {useContext, useEffect, useState} from 'react';
 import { useLocation, useNavigate, useParams } from 'react-router-dom';
 import { motion, AnimatePresence } from "framer-motion";
 import AnimatedGamePage from '../AnimatedPage/AnimatedGamePage';
@@ -15,6 +15,7 @@ import { ReactComponent as Add } from "../../Resources/image/add.svg";
 import AddedToCartBig from '../../Components/AddedToCart/AddedToCartBig';
 import Cart from '../../Components/Cart/Cart';
 import templateGame from '../../utils/templateGame';
+import {AuthContext} from "../../context/authContext";
 
 const GamePage = props => {
   const {
@@ -46,6 +47,8 @@ const GamePage = props => {
     handleRemoveFromCart,
     openGamePage
   } = props;
+
+  const { currentUser } = useContext(AuthContext);
 
   let { gameId } = useParams();
   const location = useLocation();
@@ -185,11 +188,18 @@ const GamePage = props => {
                     <div className={styles.addToCart}>
                       <div className={styles.infos}>
                           <h3>${selectedGame ? selectedGame.price : templateGame.price}</h3>
-                          <button id={selectedGame ? selectedGame.id : templateGame.id} onClick={handleLike} aria-label="Like">
-                              <Like 
-                                className={selectedGame ? selectedGame.isLiked ? styles.liked : styles.like : styles.like}
-                              />
-                          </button>
+                          {!currentUser ? (
+                              <>
+                              </>
+                          ) : (
+                              <>
+                                  <button id={selectedGame ? selectedGame.id : templateGame.id} onClick={handleLike} aria-label="Like">
+                                      <Like
+                                          className={selectedGame ? selectedGame.isLiked ? styles.liked : styles.like : styles.like}
+                                      />
+                                  </button>
+                              </>
+                          )}
                       </div>
                       {selectedGame ? selectedGame.inCart ? <AddedToCartBig /> : 
                       <button 

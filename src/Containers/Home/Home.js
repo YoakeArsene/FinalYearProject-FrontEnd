@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, {useContext, useState} from 'react';
 import styles from './Home.module.css';
 import NavBar from '../../Components/NavBar/NavBar';
 import { ReactComponent as Enter } from "../../Resources/image/enter.svg";
@@ -9,6 +9,7 @@ import { Navigate, useLocation, useNavigate } from 'react-router-dom';
 import Cart from '../../Components/Cart/Cart';
 import AnimatedScroll from '../AnimatedPage/AnimatedScroll';
 import games from '../../utils/games';
+import {AuthContext} from "../../context/authContext";
 
 const Home = props => {
   const {
@@ -29,6 +30,8 @@ const Home = props => {
 
   const [browsing, setBrowsing] = useState(false);
   const [landingPage, setLandingPage] = useState(true);
+
+  const { currentUser } = useContext(AuthContext);
 
   const navigate = useNavigate();
 
@@ -129,10 +132,17 @@ const Home = props => {
                                 <Enter className={styles.ctaSVG} />
                                 Browse
                               </button>
-                              <button className={styles.cta} aria-label="Open user library">
-                                <Book className={styles.ctaSVG} />
-                                Library
-                              </button>
+                              {!currentUser ? (
+                                  <>
+                                  </>
+                              ) : (
+                                  <>
+                                      <button className={styles.cta} aria-label="Open user library">
+                                          <Book className={styles.ctaSVG} />
+                                          Library
+                                      </button>
+                                  </>
+                              )}
                               <button className={styles.cta} onClick={handlePlayDice} aria-label="Open random game page">
                                 <Dice className={styles.ctaSVG} />
                                 Play Dice
