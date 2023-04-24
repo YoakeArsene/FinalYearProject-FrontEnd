@@ -1,10 +1,11 @@
-import React, { useState } from 'react';
+import React, {useContext, useState} from 'react';
 import styles from './NavBar.module.css';
 import { ReactComponent as Logo } from "../../Resources/image/logo.svg";
 import { ReactComponent as Browse } from "../../Resources/image/browse.svg";
 import { ReactComponent as Cart } from "../../Resources/image/cart.svg";
 import { ReactComponent as Book } from "../../Resources/image/book.svg";
 import { ReactComponent as Search } from "../../Resources/image/search.svg";
+import {AuthContext} from "../../context/authContext";
 import { motion } from "framer-motion";
 import { useLocation, useNavigate } from 'react-router-dom';
 const NavBar = props => { 
@@ -35,9 +36,28 @@ const NavBar = props => {
         visible: { opacity: 1 },
     }
 
-  const location = useLocation();
+    const { currentUser, logout } = useContext(AuthContext);
 
-  return (
+    const location = useLocation();
+
+    const navigate = useNavigate();
+
+    function handleLoginClick() {
+        navigate("/login");
+    }
+
+    const handleLogout = async (e) => {
+        e.preventDefault();
+
+        try {
+            await logout();
+            navigate("/login");
+        } catch (err) {
+            console.log("Logout failed with error:" + err);
+        }
+    };
+
+    return (
     <>
       <motion.div 
         className={styles.navbar}
@@ -110,48 +130,72 @@ const NavBar = props => {
                 }
             </div>
 
-            <div className={styles.logodiv}>
-                <Book
-                    className={styles.svg}
-                />
-                <h3 onClick={handleBrowse}>Your Library</h3>
-            </div>
+            {!currentUser ? (
+                <>
+                </>
+            ) : (
+                <>
+                    <div className={styles.logodiv}>
+                        <Book
+                            className={styles.svg}
+                        />
+                        <h3 onClick={handleBrowse}>Your Library</h3>
+                    </div>
+                </>
+            )}
         </div>
 
         <div className={styles.navbar_right}>
 
-            <div
-                className={styles.githubdiv}
-                id="2"
-                onMouseEnter={handleHover}
-                onMouseLeave={handleHover}
-            >
-                <h3>Profile</h3>
-            </div>
+            {!currentUser ? (
+                <>
+                    <div
+                        className={styles.githubdiv}
+                        id="2"
+                        onMouseEnter={handleHover}
+                        onMouseLeave={handleHover}
+                        onClick={handleLoginClick}
+                    >
+                        <h3>Log In</h3>
+                    </div>
+                </>
+            ) : (
+                <>
+                    <div
+                        className={styles.githubdiv}
+                        id="2"
+                        onMouseEnter={handleHover}
+                        onMouseLeave={handleHover}
+                    >
+                        <h3>Profile</h3>
+                    </div>
 
-            <div 
-              className={styles.cartdiv} 
-              id="3"
-              onMouseEnter={handleHover}
-              onMouseLeave={handleHover}
-              onClick={handleOpenCart}
-            >
-                <Cart 
-                  onClick={handleOpenCart} 
-                  className={styles.svg2} 
-                  style={{ fill: cartAmount ? "#90ee90" : "transparent", stroke: cartAmount ? "" : "#fff", strokeWidth: "34px" }}
-                />
-                <h3 onClick={handleOpenCart}>Cart: {cartAmount}</h3>
-            </div>
+                    <div
+                        className={styles.cartdiv}
+                        id="3"
+                        onMouseEnter={handleHover}
+                        onMouseLeave={handleHover}
+                        onClick={handleOpenCart}
+                    >
+                        <Cart
+                            onClick={handleOpenCart}
+                            className={styles.svg2}
+                            style={{ fill: cartAmount ? "#90ee90" : "transparent", stroke: cartAmount ? "" : "#fff", strokeWidth: "34px" }}
+                        />
+                        <h3 onClick={handleOpenCart}>Cart: {cartAmount}</h3>
+                    </div>
 
-            <div
-                className={styles.githubdiv}
-                id="2"
-                onMouseEnter={handleHover}
-                onMouseLeave={handleHover}
-            >
-                <h3>Log Out</h3>
-            </div>
+                    <div
+                        className={styles.githubdiv}
+                        id="2"
+                        onMouseEnter={handleHover}
+                        onMouseLeave={handleHover}
+                        onClick={handleLogout}
+                    >
+                        <h3>Log Out</h3>
+                    </div>
+                </>
+            )}
         </div>
       </motion.div>
     </>

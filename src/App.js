@@ -4,6 +4,7 @@ import Browse from './Containers/Browse/Browse';
 import GamePage from './Containers/GamePage/GamePage';
 import NotFound from './Containers/NotFound/NotFound';
 import Home from './Containers/Home/Home';
+import Login from './Containers/Login/Login';
 import { AnimatePresence } from "framer-motion";
 import filterNames from './utils/filterNames';
 import games from './utils/games';
@@ -448,6 +449,11 @@ useEffect(() => {
                             handleRemoveFromCart={handleRemoveFromCart}
                             openGamePage={openGamePage}
           />} />
+            <Route path="/login" element={<Login cartDisplayed={cartDisplayed}
+                                                 hoverState={hoverState}
+                                                 handleHome={handleHome}
+                                                 handleHover={handleHover}
+            />} />
           </Routes>
       </AnimatePresence>
   );
