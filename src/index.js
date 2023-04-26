@@ -16,11 +16,11 @@ root.render(
   <React.StrictMode>
       <QueryClientProvider client={queryClient}>
           <BrowserRouter>
-              <AuthContextProvider>
-                  <GameContextProvider>
+              <GameContextProvider>
+                 <AuthContextProvider>
                       <App />
-                  </GameContextProvider>
-              </AuthContextProvider>
+                 </AuthContextProvider>
+              </GameContextProvider>
           </BrowserRouter>
       </QueryClientProvider>
   </React.StrictMode>

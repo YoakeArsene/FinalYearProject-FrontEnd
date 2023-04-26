@@ -7,9 +7,11 @@ import Home from './Containers/Home/Home';
 import Login from './Containers/Login/Login';
 import Register from './Containers/Register/Register';
 import Profile from './Containers/Profile/Profile';
+import Manage from './Containers/Manage/Manage';
 import { AnimatePresence } from "framer-motion";
 import filterNames from './utils/filterNames';
 import templateGame from './utils/templateGame';
+// import games from "./utils/games";
 import {GameContext} from "./context/gameContext";
 
 function App() {
@@ -131,10 +133,14 @@ function App() {
     }
   ]);
 
+  useEffect(() => {
+    setAllGames(games);
+  }, [games]);
+
 const navigate = useNavigate();
 const location = useLocation();
 
-if (location.pathname !== "/store/" && location.pathname !== "/store/browse" && selectedGame === false) {
+if (location.pathname !== "/store/" && location.pathname !== "/store/browse" && location.pathname !== "/store/manage" && selectedGame === false) {
   let surname = location.pathname.substring(29);
   let currentGame = games.find(game => game.surname === surname);
   if (currentGame !== undefined) {
@@ -308,10 +314,6 @@ const handleRemoveFromCart = (e) => {
   setCartAmount(cartAmount - 1)
   setHoverState([...hoverState, hoverState[21].hovered = false]);
 }
-
-  useEffect(() => {
-    setAllGames(games);
-  }, [games]);
 
 useEffect(() => {
   setOverlap(false);
@@ -511,6 +513,39 @@ useEffect(() => {
                                                 handleSearchSubmit={handleSearchSubmit}
                                                 handleBrowse={handleBrowse}
                                                 handleRemoveFromCart={handleRemoveFromCart}
+                                                openGamePage={openGamePage}
+            />} />
+            <Route path="/store/manage" element={<Manage
+                                                cart={cart}
+                                                cartAmount={cartAmount}
+                                                handleHover={handleHover}
+                                                handleSelect={handleSelect}
+                                                hoverState={hoverState}
+                                                currentFilter={currentFilter}
+                                                shownGames={shownGames}
+                                                setShownGames={setShownGames}
+                                                clearFilter={clearFilter}
+                                                reviewDisplay={reviewDisplay}
+                                                setReviewDisplay={setReviewDisplay}
+                                                allGames={allGames}
+                                                setAllGames={setAllGames}
+                                                handleLike={handleLike}
+                                                handleHoverGame={handleHoverGame}
+                                                handleAddToCart={handleAddToCart}
+                                                handleSelectGame={handleSelectGame}
+                                                handleSearch={handleSearch}
+                                                handleSearchSubmit={handleSearchSubmit}
+                                                search={search}
+                                                searching={searching}
+                                                browsing={browsing}
+                                                handleBrowse={handleBrowse}
+                                                handleHome={handleHome}
+                                                cartDisplayed={cartDisplayed}
+                                                handleOpenCart={handleOpenCart}
+                                                handleCloseCart={handleCloseCart}
+                                                clearCart={clearCart}
+                                                handleRemoveFromCart={handleRemoveFromCart}
+                                                setHoverState={setHoverState}
                                                 openGamePage={openGamePage}
             />} />
           </Routes>

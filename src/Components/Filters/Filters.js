@@ -28,7 +28,7 @@ const Filters = props => {
           <h2>Filters</h2>
 
           <div className={styles.globalFilters}>
-              {!currentUser ? (
+              {!currentUser  || currentUser.data.user.role_ticker === "SAD" ? (
                   <>
                   </>
               ) : (

@@ -53,7 +53,8 @@ const Login = props => {
         setErr(null);
         try {
             await login(inputs);
-            navigate("/");
+            navigate("/store");
+            window.location.reload();
         } catch (err) {
             setErr(err.response.data);
         }

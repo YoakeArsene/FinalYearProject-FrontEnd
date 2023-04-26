@@ -47,7 +47,7 @@ const NavBar = props => {
     }
 
     function handleManage() {
-        navigate("/manage");
+        navigate("/store/manage");
     }
 
     const handleLogout = async (e) => {
@@ -55,6 +55,8 @@ const NavBar = props => {
 
         try {
             await logout();
+            navigate("/store");
+            window.location.reload();
         } catch (err) {
             console.log("Logout failed with error:" + err);
         }

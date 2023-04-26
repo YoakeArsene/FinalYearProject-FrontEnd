@@ -1,0 +1,153 @@
+.form {
+    background-color: #0f1011;
+    height: 100vh;
+}
+
+.formContainer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-direction: column;
+    background-color: #202020;
+    width: 700px;
+    height: 670px;
+    box-sizing: border-box;
+    /*padding: 50px 50px 0px 50px;*/
+    margin: 0 auto;
+    border-radius: 30px;
+    overflow: hidden;
+    /*margin-bottom: 30px;*/
+    /*margin-top: 100px;*/
+    position: fixed;
+    top: 3%;
+    left: 30%;
+    /*transform: translate(-50%, -50%);*/
+    padding: 2rem;
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+    z-index: 9999;
+}
+
+.formContent {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 50px;
+    background-color: #202020;
+
+}
+
+.formText {
+    align-self: flex-start;
+    /*margin-top: 35px;*/
+    margin-bottom: 20px;
+
+}
+
+.formText h1 {
+    font-family: "GT Bold";
+    color: white;
+    /*margin-bottom: 8px;*/
+}
+
+.formForm {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 6px;
+    cursor: pointer;
+    transition: ease-in-out 0.2s;
+    z-index: 9;
+    margin-bottom: 0px;
+}
+
+.formForm form {
+    display: flex;
+    flex-direction: column;
+}
+
+.formForm input {
+    display: block;
+    margin-bottom: 40px;
+    background-color: #262626;
+    border: 1px transparent;
+    border-radius: 8px;
+    height: 35px;
+    width: 300px;
+    padding-left: 18px;
+    font-size: 0.92em;
+    font-family: "GT Medium";
+    color: #ffffff;
+    outline: none;
+    transition: all .3s;
+}
+
+.formForm label {
+    display: block;
+    /*margin-bottom: 40px;*/
+    /*background-color: #262626;*/
+    /*border: 1px transparent;*/
+    /*border-radius: 8px;*/
+    height: 30px;
+    width: 300px;
+    padding-left: 18px;
+    font-size: 0.92em;
+    font-family: "GT Medium";
+    color: #ffffff;
+    /*outline: none;*/
+    transition: all .3s;
+}
+
+.formForm input:hover {
+    background-color: #2d2d2d;
+}
+
+.formForm input:focus {
+    background-color: #333;
+}
+
+.formForm div {
+    display: flex;
+    gap: 1rem;
+    margin-bottom: -5px;
+}
+
+.cta {
+    background-color: #fff;
+    border: 1px transparent;
+    border-radius: 18px;
+    color: black;
+    padding: 10px 28px;
+    display: flex;
+    gap: 12px;
+    font-family: "GT Medium";
+    font-size: 16px;
+    transition: 0.3s all;
+    cursor: pointer;
+    margin-bottom: 30px;
+}
+
+.cta:hover {
+    transform: scale(1.03);
+    background-color: #45c1bc;
+}
+
+.cta * {
+    pointer-events: none;
+}
+
+.cta .linkedin {
+    padding-bottom: 1px;
+}
+
+.lastChild {
+    gap: 10px;
+}
+
+.cta span {
+    padding-top: 1px;
+}
+
+
+
+
+

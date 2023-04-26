@@ -9,7 +9,6 @@ export const GameContextProvider = ({ children }) => {
             return res.data;
         })
     );
-    console.log(games);
     return (
         <GameContext.Provider value={{ games }}>
             {children}

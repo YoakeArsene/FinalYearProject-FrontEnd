@@ -5,6 +5,7 @@ import { ReactComponent as Add } from "../../Resources/image/add.svg";
 import { motion } from "framer-motion";
 import AddToCart from '../AddToCart/AddToCart';
 import AddedToCart from '../AddedToCart/AddedToCart';
+import EditGame from '../EditGame/EditGame';
 import AnimatedCard from '../../Containers/AnimatedPage/AnimatedCard';
 import { useLocation } from 'react-router-dom';
 import {AuthContext} from "../../context/authContext";
@@ -44,16 +45,27 @@ const Card = props => {
             <img src={game.cover} className={styles.img} alt="Game Cover Image" />
     
             <div className={styles.price}>
-                    {game.inCart ? <AddedToCart /> : <AddToCart
-                                          game={game}
-                                          handleHoverGame={handleHoverGame}
-                                          handleAddToCart={handleAddToCart}
-                                        />
-                    }
+                {currentUser.data.user.role_ticker === "SAD" ? (
+                    <>
+                        <EditGame
+                            game={game}
+                            handleHoverGame={handleHoverGame}
+                        />
+                    </>
+                ) : (
+                    <>
+                        {game.inCart ? <AddedToCart /> : <AddToCart
+                            game={game}
+                            handleHoverGame={handleHoverGame}
+                            handleAddToCart={handleAddToCart}
+                        />
+                        }
+                    </>
+                )}
                 ${game.price}
             </div>
             <h2 className={styles.name}>{game.name}</h2>
-            {!currentUser ? (
+            {!currentUser  || currentUser.data.user.role_ticker === "SAD" ?(
                 <>
                 </>
             ) : (
