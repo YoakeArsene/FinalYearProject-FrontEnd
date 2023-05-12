@@ -204,20 +204,27 @@ const Browse = props => {
                                 </button>
                             </div>
                         </div>
-
-                        <Grid
-                            shownGames={library}
-                            reviewDisplay={reviewDisplay}
-                            handleLike={handleLike}
-                            handleHoverGame={handleHoverGame}
-                            handleAddToCart={handleAddToCart}
-                            grid={grid}
-                            search={search}
-                            searching={searching}
-                            handleSelectGame={handleSelectGame}
-                            cartDisplayed={cartDisplayed}
-                            hoverState={hoverState}
-                        />
+                        {library === null ? (
+                            <>
+                                <p>Your library is empty. Why don't you try to buy something?</p>
+                            </>
+                        ) : (
+                            <>
+                                <Grid
+                                    shownGames={library}
+                                    reviewDisplay={reviewDisplay}
+                                    handleLike={handleLike}
+                                    handleHoverGame={handleHoverGame}
+                                    handleAddToCart={handleAddToCart}
+                                    grid={grid}
+                                    search={search}
+                                    searching={searching}
+                                    handleSelectGame={handleSelectGame}
+                                    cartDisplayed={cartDisplayed}
+                                    hoverState={hoverState}
+                                />
+                            </>
+                        )}
                     </div>
                 </div>
             </AnimatedPage>

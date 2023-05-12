@@ -534,3 +534,38 @@ header h1 {
         height: 370px !important;
     }
 }
+
+.cta {
+    background-color: #fff;
+    border: 1px transparent;
+    border-radius: 18px;
+    color: black;
+    padding: 10px 28px;
+    display: flex;
+    gap: 12px;
+    font-family: "GT Medium";
+    font-size: 16px;
+    transition: 0.3s all;
+    cursor: pointer;
+}
+
+.cta:hover {
+    transform: scale(1.03);
+    background-color: #45c1bc;
+}
+
+.cta * {
+    pointer-events: none;
+}
+
+.cta .linkedin {
+    padding-bottom: 1px;
+}
+
+.lastChild {
+    gap: 10px;
+}
+
+.cta span {
+    padding-top: 1px;
+}

@@ -105,8 +105,12 @@ const GamePage = props => {
         setTextExtended(!textExtended);
     }
   }
-  
-  return (
+
+    const handlePlay = async () => {
+        await makeRequest.get("health-check");
+    };
+
+    return (
     <>
         <div className={styles.gamepage}>
             {cartDisplayed ? <Cart 
@@ -221,7 +225,12 @@ const GamePage = props => {
                       </div>
                       {isInLibrary === 1 ? (
                           <>
-                              <InLibraryBig />
+                              <>
+                                  <button className={`${styles.cta}`}
+                                          onClick={handlePlay}>
+                                      Play
+                                  </button>
+                              </>
                           </>
                       ) : (
                           <>

@@ -36,10 +36,6 @@ const Checkout = props => {
 
     const gameIds = cart.map(game => game.id);
 
-    useEffect( () => {
-        console.log(gameIds)
-    },[gameIds])
-
     const animations = {
         initial: { opacity: 0, y: -225 },
         animate: { opacity: 1, y: 0, transition: { y: { type: "spring", duration: 1.5, bounce: 0.5 }} },
