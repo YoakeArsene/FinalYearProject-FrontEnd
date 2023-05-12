@@ -57,8 +57,7 @@ const AddGameForm = ({setShowAddGameForm}) => {
             onSuccess: () => {
                 // Invalidate and refetch
                 queryClient.invalidateQueries(["games"]);
-                navigate("/store");
-                window.location.reload();
+                navigate("/store/manage");
             },
         }
     );
