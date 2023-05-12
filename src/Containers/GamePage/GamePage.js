@@ -16,6 +16,8 @@ import AddedToCartBig from '../../Components/AddedToCart/AddedToCartBig';
 import Cart from '../../Components/Cart/Cart';
 import templateGame from '../../utils/templateGame';
 import {AuthContext} from "../../context/authContext";
+import {makeRequest} from "../../axios";
+import InLibraryBig from "../../Components/InLibrary/InLibraryBig";
 
 const GamePage = props => {
   const {
@@ -49,6 +51,22 @@ const GamePage = props => {
   } = props;
 
   const { currentUser } = useContext(AuthContext);
+
+    const [isInLibrary, setIsInLibrary] = useState(0);
+
+    useEffect(() => {
+        const checkGameInLibrary = async () => {
+            try {
+                const response = await makeRequest.post('/library/check', { user_id: currentUser?.data?.user?.id, game_id: selectedGame.id });
+                const data = response.data;
+                setIsInLibrary(data);
+                console.log(isInLibrary);
+            } catch (error) {
+                console.log(error);
+            }
+        };
+        checkGameInLibrary();
+    }, [selectedGame.id]);
 
   let { gameId } = useParams();
   const location = useLocation();
@@ -201,37 +219,45 @@ const GamePage = props => {
                               </>
                           )}
                       </div>
-                      {selectedGame ? selectedGame.inCart ? <AddedToCartBig /> : 
-                      <button 
-                        id="21" 
-                        onMouseEnter={handleHover} 
-                        onMouseLeave={handleHover} 
-                        className={styles.addToCartButton}
-                        style={{ color: hoverState[21].hovered ? "#92f" : "#999999" }} 
-                        onClick={handleAddToCart} 
-                        aria-label="Add"
-                      >
-                        Add to cart
-                        <Add 
-                          className={styles.add} 
-                          style={{ fill: hoverState[21].hovered ? "#92f" : "#999999" }}
-                        />
-                      </button> : 
+                      {isInLibrary === 1 ? (
+                          <>
+                              <InLibraryBig />
+                          </>
+                      ) : (
+                          <>
+                              {selectedGame ? selectedGame.inCart ? <AddedToCartBig /> :
+                                      <button
+                                          id="21"
+                                          onMouseEnter={handleHover}
+                                          onMouseLeave={handleHover}
+                                          className={styles.addToCartButton}
+                                          style={{ color: hoverState[21].hovered ? "#92f" : "#999999" }}
+                                          onClick={handleAddToCart}
+                                          aria-label="Add"
+                                      >
+                                          Add to cart
+                                          <Add
+                                              className={styles.add}
+                                              style={{ fill: hoverState[21].hovered ? "#92f" : "#999999" }}
+                                          />
+                                      </button> :
 
-                      <button 
-                        id="21" 
-                        onMouseEnter={handleHover} 
-                        onMouseLeave={handleHover} 
-                        style={{ color: hoverState[21].hovered ? "#D2042D" : "#999999" }} 
-                        onClick={handleAddToCart} 
-                        aria-label="Add"
-                      >
-                        Not available
-                        <Add 
-                          className={styles.add} 
-                          style={{ fill: hoverState[21].hovered ? "#D2042D" : "#999999" }}
-                        />
-                      </button>}
+                                  <button
+                                      id="21"
+                                      onMouseEnter={handleHover}
+                                      onMouseLeave={handleHover}
+                                      style={{ color: hoverState[21].hovered ? "#D2042D" : "#999999" }}
+                                      onClick={handleAddToCart}
+                                      aria-label="Add"
+                                  >
+                                      Not available
+                                      <Add
+                                          className={styles.add}
+                                          style={{ fill: hoverState[21].hovered ? "#D2042D" : "#999999" }}
+                                      />
+                                  </button>}
+                          </>
+                      )}
                     </div>
                   </div>
                 </section>

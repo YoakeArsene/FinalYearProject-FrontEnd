@@ -1,5 +1,5 @@
 import styles from './Cart.module.css';
-import React, {useContext, useState} from 'react';
+import React, {useContext, useState, useEffect} from 'react';
 import { ReactComponent as Right } from "../../Resources/image/arrowRight.svg";
 import { ReactComponent as Cross } from "../../Resources/image/cross.svg";
 import { motion, AnimatePresence } from "framer-motion";
@@ -43,6 +43,11 @@ const Cart = props => {
         animate: { x: 0, transition: {  x: { type: "spring", duration: 1.2, bounce: 0.4 }} },
         exit: { x: 100, transition: {  x: { type: "spring", duration: 1.2, bounce: 0.575 }} },
     }
+
+    const handleCheckout = () => {
+        handleCloseCart();
+        navigate('/checkout', { state: { cart, newTotal } });
+    };
 
     return (
         <div className={styles.cartWindow}>
@@ -105,6 +110,7 @@ const Cart = props => {
                                         id="24"
                                         onMouseEnter={handleHover}
                                         onMouseLeave={handleHover}
+                                        onClick={handleCheckout}
                                         style={{ color: hoverState[24].hovered ? "#92f" : "#fff" }}
                                         aria-label="Checkout"
                                     >

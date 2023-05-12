@@ -8,6 +8,7 @@ import Login from './Containers/Login/Login';
 import Register from './Containers/Register/Register';
 import Profile from './Containers/Profile/Profile';
 import Manage from './Containers/Manage/Manage';
+import Checkout from './Containers/Checkout/Checkout';
 import { AnimatePresence } from "framer-motion";
 import filterNames from './utils/filterNames';
 import templateGame from './utils/templateGame';
@@ -164,6 +165,7 @@ const handleHome = () => {
   setCartDisplayed(false);
   setHoverState([...hoverState, hoverState[21].hovered = false]);
   navigate('/store');
+  window.location.reload();
 }
 
 const handleSearch = (e) => {
@@ -516,6 +518,39 @@ useEffect(() => {
                                                 openGamePage={openGamePage}
             />} />
             <Route path="/store/manage" element={<Manage
+                                                cart={cart}
+                                                cartAmount={cartAmount}
+                                                handleHover={handleHover}
+                                                handleSelect={handleSelect}
+                                                hoverState={hoverState}
+                                                currentFilter={currentFilter}
+                                                shownGames={shownGames}
+                                                setShownGames={setShownGames}
+                                                clearFilter={clearFilter}
+                                                reviewDisplay={reviewDisplay}
+                                                setReviewDisplay={setReviewDisplay}
+                                                allGames={allGames}
+                                                setAllGames={setAllGames}
+                                                handleLike={handleLike}
+                                                handleHoverGame={handleHoverGame}
+                                                handleAddToCart={handleAddToCart}
+                                                handleSelectGame={handleSelectGame}
+                                                handleSearch={handleSearch}
+                                                handleSearchSubmit={handleSearchSubmit}
+                                                search={search}
+                                                searching={searching}
+                                                browsing={browsing}
+                                                handleBrowse={handleBrowse}
+                                                handleHome={handleHome}
+                                                cartDisplayed={cartDisplayed}
+                                                handleOpenCart={handleOpenCart}
+                                                handleCloseCart={handleCloseCart}
+                                                clearCart={clearCart}
+                                                handleRemoveFromCart={handleRemoveFromCart}
+                                                setHoverState={setHoverState}
+                                                openGamePage={openGamePage}
+            />} />
+            <Route path="/checkout" element={<Checkout
                                                 cart={cart}
                                                 cartAmount={cartAmount}
                                                 handleHover={handleHover}

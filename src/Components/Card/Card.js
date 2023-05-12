@@ -1,14 +1,16 @@
 import styles from './Card.module.css';
-import React, {useContext} from 'react';
+import React, {useContext, useEffect, useState} from 'react';
 import { ReactComponent as Like } from "../../Resources/image/like.svg";
 import { ReactComponent as Add } from "../../Resources/image/add.svg";
 import { motion } from "framer-motion";
 import AddToCart from '../AddToCart/AddToCart';
 import AddedToCart from '../AddedToCart/AddedToCart';
+import InLibrary from '../InLibrary/InLibrary';
 import EditGame from '../EditGame/EditGame';
 import AnimatedCard from '../../Containers/AnimatedPage/AnimatedCard';
 import { useLocation } from 'react-router-dom';
 import {AuthContext} from "../../context/authContext";
+import {makeRequest} from "../../axios";
 
 const Card = props => {
     const { 
@@ -30,6 +32,22 @@ const Card = props => {
     const location = useLocation();
 
     const { currentUser } = useContext(AuthContext);
+
+    const [isInLibrary, setIsInLibrary] = useState(0);
+
+    useEffect(() => {
+        const checkGameInLibrary = async () => {
+            try {
+                const response = await makeRequest.post('/library/check', { user_id: currentUser?.data?.user?.id, game_id: game.id });
+                const data = response.data;
+                setIsInLibrary(data);
+                console.log(isInLibrary);
+            } catch (error) {
+                console.log(error);
+            }
+        };
+        checkGameInLibrary();
+    }, [game.id]);
 
     return (
           <motion.div 
@@ -54,15 +72,23 @@ const Card = props => {
                     </>
                 ) : (
                     <>
-                        {game.inCart ? <AddedToCart /> : <AddToCart
-                            game={game}
-                            handleHoverGame={handleHoverGame}
-                            handleAddToCart={handleAddToCart}
-                        />
-                        }
+                        {isInLibrary === 1 ? (
+                            <>
+                                <InLibrary />
+                            </>
+                        ) : (
+                            <>
+                                {game.inCart ? <AddedToCart /> : <AddToCart
+                                    game={game}
+                                    handleHoverGame={handleHoverGame}
+                                    handleAddToCart={handleAddToCart}
+                                />
+                                }
+                                ${game.price}
+                            </>
+                        )}
                     </>
                 )}
-                ${game.price}
             </div>
             <h2 className={styles.name}>{game.name}</h2>
             {!currentUser  || currentUser.data.user.role_ticker === "SAD" ?(
