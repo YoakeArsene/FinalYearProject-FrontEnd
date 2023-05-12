@@ -1,6 +1,7 @@
 import { BrowserRouter, Routes, Route, useNavigate, useLocation } from "react-router-dom";
 import React, {useContext, useEffect, useState} from 'react';
 import Browse from './Containers/Browse/Browse';
+import Library from './Containers/Library/Library';
 import GamePage from './Containers/GamePage/GamePage';
 import NotFound from './Containers/NotFound/NotFound';
 import Home from './Containers/Home/Home';
@@ -14,11 +15,14 @@ import filterNames from './utils/filterNames';
 import templateGame from './utils/templateGame';
 // import games from "./utils/games";
 import {GameContext} from "./context/gameContext";
+import {LibraryContext} from "./context/libraryContext";
 
 function App() {
   const [currentFilter, setCurrentFilter] = useState("none");
   const { games } = useContext(GameContext);
+  const { libraryData } = useContext(LibraryContext);
   const [allGames, setAllGames] = useState(games);
+  const [library, setLibrary] = useState(libraryData);
   const [cart, setCart] = useState([]);
   const [cartAmount, setCartAmount] = useState(0);
   const [shownGames, setShownGames] = useState(allGames);
@@ -411,6 +415,39 @@ useEffect(() => {
                                               setHoverState={setHoverState}
                                               openGamePage={openGamePage}
                                           />} />
+            <Route path="/library" element={<Library
+                                              cart={cart}
+                                              cartAmount={cartAmount}
+                                              handleHover={handleHover}
+                                              handleSelect={handleSelect}
+                                              hoverState={hoverState}
+                                              currentFilter={currentFilter}
+                                              library={library}
+                                              setLibrary={setLibrary}
+                                              clearFilter={clearFilter}
+                                              reviewDisplay={reviewDisplay}
+                                              setReviewDisplay={setReviewDisplay}
+                                              allGames={allGames}
+                                              setAllGames={setAllGames}
+                                              handleLike={handleLike}
+                                              handleHoverGame={handleHoverGame}
+                                              handleAddToCart={handleAddToCart}
+                                              handleSelectGame={handleSelectGame}
+                                              handleSearch={handleSearch}
+                                              handleSearchSubmit={handleSearchSubmit}
+                                              search={search}
+                                              searching={searching}
+                                              browsing={browsing}
+                                              handleBrowse={handleBrowse}
+                                              handleHome={handleHome}
+                                              cartDisplayed={cartDisplayed}
+                                              handleOpenCart={handleOpenCart}
+                                              handleCloseCart={handleCloseCart}
+                                              clearCart={clearCart}
+                                              handleRemoveFromCart={handleRemoveFromCart}
+                                              setHoverState={setHoverState}
+                                              openGamePage={openGamePage}
+            />} />
             <Route path="/store/games/:gameId" element={<GamePage
                                                cart={cart}
                                                cartAmount={cartAmount}

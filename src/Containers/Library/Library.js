@@ -1,4 +1,4 @@
-import styles from './Manage.module.css';
+import styles from './Library.module.css';
 import React, {useContext, useEffect, useState} from 'react';
 import NavBar from '../../Components/NavBar/NavBar';
 import { useLocation, useNavigate } from 'react-router-dom';
@@ -10,17 +10,19 @@ import Filters from '../../Components/Filters/Filters';
 import Grid from '../../Components/Grid/Grid';
 import Cart from '../../Components/Cart/Cart';
 import Footer from '../../Components/Footer/Footer';
-import AddGameForm from '../../Components/AddGameForm/AddGameForm';
 import {GameContext} from "../../context/gameContext";
+import {AuthContext} from "../../context/authContext";
+import {makeRequest} from "../../axios";
+import {LibraryContext} from "../../context/libraryContext";
 
-const Manage = props => {
+const Browse = props => {
     const {
         handleHover,
         handleSelect,
         hoverState,
         currentFilter,
-        shownGames,
-        setShownGames,
+        library,
+        setLibrary,
         clearFilter,
         setReviewDisplay,
         reviewDisplay,
@@ -51,12 +53,8 @@ const Manage = props => {
     const navigate = useNavigate();
     const [landingPage, setLandingPage] = useState(false);
     const [grid, setGrid] = useState(true);
-    const [showAddGameForm, setShowAddGameForm] = useState(false);
-    const { games } = useContext(GameContext);
-
-    useEffect(() => {
-        setShownGames(games);
-    }, [games]);
+    const { libraryData } = useContext(LibraryContext);
+    const { currentUser } = useContext(AuthContext);
 
     const handleLayoutSwitch = (e) => {
         if (e.target.id == "grid") {
@@ -67,26 +65,30 @@ const Manage = props => {
     }
 
     useEffect(() => {
+        setLibrary(libraryData);
+    }, [libraryData]);
+
+    useEffect(() => {
         if (currentFilter == "none") {
-            setShownGames(games);
+            setLibrary(libraryData);
 
         } else if (currentFilter != "Ratings" && currentFilter != "Reviews" && currentFilter != "Wishlist") {
             let filteredShownGames = allGames.filter(game => game.genre === currentFilter);
-            setShownGames(filteredShownGames);
+            setLibrary(filteredShownGames);
 
         } else if (currentFilter === "Ratings") {
             let filteredShownGames = allGames.slice(0);
             filteredShownGames = filteredShownGames.sort(function(a, b) {
                 return b.rating - a.rating;
             })
-            setShownGames(filteredShownGames);
+            setLibrary(filteredShownGames);
 
         } else if (currentFilter === "Reviews") {
             setReviewDisplay(true);
 
         } else if (currentFilter === "Wishlist") {
             let filteredShownGames = allGames.filter(game => game.isLiked === true);
-            setShownGames(filteredShownGames);
+            setLibrary(filteredShownGames);
         }
 
         if (currentFilter != "Reviews") {
@@ -117,6 +119,19 @@ const Manage = props => {
 
     return (
         <section className={styles.Browse} style={{ maxHeight: cartDisplayed ? "100vh" : "1000vh", minHeight: "100vh" }}>
+            {cartDisplayed ? <Cart
+                cartDisplayed={cartDisplayed}
+                handleOpenCart={handleOpenCart}
+                handleCloseCart={handleCloseCart}
+                cart={cart}
+                cartAmount={cartAmount}
+                handleHover={handleHover}
+                hoverState={hoverState}
+                clearCart={clearCart}
+                handleRemoveFromCart={handleRemoveFromCart}
+                openGamePage={openGamePage}
+            /> : null}
+
             <NavBar
                 handleHover={handleHover}
                 hoverState={hoverState}
@@ -142,16 +157,23 @@ const Manage = props => {
                     />
 
                     <div className={styles.list}>
-                        <h1>Manage Game Store</h1>
+                        <h1>Your Library</h1>
 
                         <div className={styles.applied}>
                             <div className={styles.filterList}>
                                 <button
-                                    className={`${styles.filterButton} ${styles.clearButton}`}
-                                    onClick={() => setShowAddGameForm(true)}
-                                    aria-label="Add a Game"
+                                    className={styles.filterButton}
+                                    aria-label="Current Filter"
                                 >
-                                    Add a Game
+                                    Filter by:
+                                    <span> {currentFilter}</span>
+                                </button>
+                                <button
+                                    className={`${styles.filterButton} ${styles.clearButton}`}
+                                    onClick={clearFilter}
+                                    aria-label="Clear Filters"
+                                >
+                                    Clear Filter
                                 </button>
                             </div>
 
@@ -184,7 +206,7 @@ const Manage = props => {
                         </div>
 
                         <Grid
-                            shownGames={shownGames}
+                            shownGames={library}
                             reviewDisplay={reviewDisplay}
                             handleLike={handleLike}
                             handleHoverGame={handleHoverGame}
@@ -200,9 +222,8 @@ const Manage = props => {
                 </div>
             </AnimatedPage>
             <Footer />
-            {showAddGameForm && <AddGameForm setShowAddGameForm={setShowAddGameForm} />}
         </section>
     );
 }
 
-export default Manage;
+export default Browse;

@@ -10,6 +10,7 @@ import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { BrowserRouter } from 'react-router-dom';
 import {AuthContextProvider} from "./context/authContext";
 import {GameContextProvider} from "./context/gameContext";
+import {LibraryContextProvider} from "./context/libraryContext";
 const queryClient = new QueryClient();
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
@@ -18,7 +19,9 @@ root.render(
           <BrowserRouter>
               <GameContextProvider>
                  <AuthContextProvider>
-                      <App />
+                     <LibraryContextProvider>
+                         <App />
+                     </LibraryContextProvider>
                  </AuthContextProvider>
               </GameContextProvider>
           </BrowserRouter>

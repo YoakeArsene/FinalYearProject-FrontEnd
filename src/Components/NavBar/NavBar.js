@@ -62,6 +62,10 @@ const NavBar = props => {
         }
     };
 
+    const handleLibrary = () => {
+        navigate("/library");
+    };
+
     return (
     <>
       <motion.div 
@@ -145,11 +149,11 @@ const NavBar = props => {
                         </>
                     ) : (
                         <>
-                            <div className={styles.logodiv}>
+                            <div className={styles.logodiv} onClick={handleLibrary}>
                                 <Book
                                     className={styles.svg}
                                 />
-                                <h3 onClick={handleBrowse}>Your Library</h3>
+                                <h3>Your Library</h3>
                             </div>
                         </>
                     )}

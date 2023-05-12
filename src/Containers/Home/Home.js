@@ -78,7 +78,11 @@ const Home = props => {
     visible: { opacity: 1, y: 0, transition: {  y: { type: "tween", duration: 1.5, bounce: 0.3 }} },
   }
 
-  return (
+    const handleLibrary = () => {
+        navigate("/library");
+    };
+
+    return (
     <div className={styles.main}>
       {overlap ? 
           <motion.div 
@@ -149,7 +153,7 @@ const Home = props => {
                                           </>
                                       ) : (
                                           <>
-                                              <button className={styles.cta} aria-label="Open user library">
+                                              <button className={styles.cta} onClick={handleLibrary} aria-label="Open user library">
                                                   <Book className={styles.ctaSVG} />
                                                   Library
                                               </button>

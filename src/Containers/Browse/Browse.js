@@ -1,5 +1,5 @@
 import styles from './Browse.module.css';
-import React, { useEffect, useState } from 'react';
+import React, {useContext, useEffect, useState} from 'react';
 import NavBar from '../../Components/NavBar/NavBar';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { AnimatePresence } from "framer-motion";
@@ -8,7 +8,6 @@ import { ReactComponent as Grids } from "../../Resources/image/grid.svg";
 import { ReactComponent as Columns } from "../../Resources/image/columns.svg";
 import Filters from '../../Components/Filters/Filters';
 import Grid from '../../Components/Grid/Grid';
-import games from '../../utils/games';
 import Cart from '../../Components/Cart/Cart';
 import Footer from '../../Components/Footer/Footer';
 import {GameContext} from "../../context/gameContext";
@@ -51,6 +50,7 @@ const Browse = props => {
     const navigate = useNavigate();
     const [landingPage, setLandingPage] = useState(false);
     const [grid, setGrid] = useState(true);
+    const { games } = useContext(GameContext);
 
     const handleLayoutSwitch = (e) => {
       if (e.target.id == "grid") {
@@ -61,9 +61,12 @@ const Browse = props => {
     }
 
     useEffect(() => {
+        setShownGames(games);
+    }, [games]);
+
+    useEffect(() => {
       if (currentFilter == "none") {
-        setShownGames(allGames);
-        console.log(shownGames);
+          setShownGames(games);
 
       } else if (currentFilter != "Ratings" && currentFilter != "Reviews" && currentFilter != "Wishlist") {
           let filteredShownGames = allGames.filter(game => game.genre === currentFilter);
@@ -142,7 +145,7 @@ const Browse = props => {
 
         <AnimatedPage exitBeforeEnter>
             <div className={styles.browseContent}>
-              <Filters 
+              <Filters
                 hoverState={hoverState}
                 handleHover={handleHover}
                 handleSelect={handleSelect}
