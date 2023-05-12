@@ -73,11 +73,11 @@ const Browse = props => {
             setLibrary(libraryData);
 
         } else if (currentFilter != "Ratings" && currentFilter != "Reviews" && currentFilter != "Wishlist") {
-            let filteredShownGames = allGames.filter(game => game.genre === currentFilter);
+            let filteredShownGames = libraryData.filter(game => game.genre === currentFilter);
             setLibrary(filteredShownGames);
 
         } else if (currentFilter === "Ratings") {
-            let filteredShownGames = allGames.slice(0);
+            let filteredShownGames = libraryData.slice(0);
             filteredShownGames = filteredShownGames.sort(function(a, b) {
                 return b.rating - a.rating;
             })
@@ -87,7 +87,7 @@ const Browse = props => {
             setReviewDisplay(true);
 
         } else if (currentFilter === "Wishlist") {
-            let filteredShownGames = allGames.filter(game => game.isLiked === true);
+            let filteredShownGames = libraryData.filter(game => game.isLiked === true);
             setLibrary(filteredShownGames);
         }
 
